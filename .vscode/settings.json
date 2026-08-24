@@ -1,0 +1,6 @@
+{
+    "prisma.pinToPrisma6": true,
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false
+}
