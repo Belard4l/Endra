@@ -23,11 +23,14 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.set("trust proxy", 1);
 
-// 100 requests / 15 min for visitors, 1000 for logged-in sessions
+// Per-IP limits per 15 minutes. Kept generous because one page makes several
+// API calls and many Rwandan mobile users share an IP (carrier NAT).
+const VISITOR_LIMIT = Number(process.env.RATE_LIMIT_VISITOR) || 600;
+const SESSION_LIMIT = Number(process.env.RATE_LIMIT_SESSION) || 3000;
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: (req: any) =>
-    req.cookies?.access_token || req.cookies?.["seller-access-token"] || req.cookies?.["admin-access-token"] ? 1000 : 100,
+    req.cookies?.access_token || req.cookies?.["seller-access-token"] || req.cookies?.["admin-access-token"] ? SESSION_LIMIT : VISITOR_LIMIT,
   message: { message: "Too many requests, please try again later." },
   standardHeaders: true,
   legacyHeaders: false,

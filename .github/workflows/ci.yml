@@ -82,6 +82,8 @@ jobs:
           PAYOUTS_ANY_DAY: "true"
           DISABLE_JOBS: "true"
           SMOKE_ACCOUNTS_FILE: /tmp/accounts.json
+          RATE_LIMIT_VISITOR: "100000"
+          RATE_LIMIT_SESSION: "100000"
         run: |
           set -o pipefail
           echo "=== smoke test" >> ci.log
