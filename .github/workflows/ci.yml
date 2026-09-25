@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore: ["**.md"]
+  pull_request:
+
+permissions:
+  contents: write
+
+env:
+  NX_NO_CLOUD: "true"
+  NX_DAEMON: "false"
+  NEXT_TELEMETRY_DISABLED: "1"
+  NEXT_PUBLIC_SERVER_URI: "http://localhost:8080"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund 2>&1 | tee -a ci.log
+
+      - name: Generate Prisma client
+        run: npx prisma generate 2>&1 | tee -a ci.log
+
+      - name: Typecheck backend
+        run: |
+          set -o pipefail
+          echo "=== typecheck backend" >> ci.log
+          npx tsc -p tsconfig.check.json --pretty false 2>&1 | tee -a ci.log
+
+      - name: Typecheck frontends
+        if: always()
+        run: |
+          set -o pipefail
+          status=0
+          for app in user-ui seller-ui admin-ui; do
+            echo "=== typecheck $app" >> ci.log
+            npx tsc -p apps/$app/tsconfig.json --noEmit --pretty false 2>&1 | tee -a ci.log || status=1
+          done
+          exit $status
+
+      - name: Build backend services
+        if: always()
+        run: |
+          set -o pipefail
+          echo "=== build backend" >> ci.log
+          npx nx run-many -t build --projects=api-gateway,auth-service,catalog-service,booking-service,admin-service --outputStyle=static 2>&1 | tee -a ci.log
+
+      - name: Build frontends
+        if: always()
+        run: |
+          set -o pipefail
+          echo "=== build frontends" >> ci.log
+          npx nx run-many -t build --projects=user-ui,seller-ui,admin-ui --parallel=1 --outputStyle=static 2>&1 | tee -a ci.log
+
+      # Keeps the full log on a separate branch so it can be read without the Actions UI
+      - name: Publish log
+        if: always() && github.event_name == 'push'
+        run: |
+          git config user.name "huza-ci"
+          git config user.email "ci@users.noreply.github.com"
+          cp ci.log /tmp/ci.log
+          git fetch origin ci-logs || true
+          git switch --orphan ci-logs-tmp
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/ci.log "latest.log"
+          echo "${GITHUB_SHA} ${{ job.status }}" > latest-sha.txt
+          git add latest.log latest-sha.txt
+          git commit -m "CI log for ${GITHUB_SHA}" >/dev/null
+          git push -f origin HEAD:ci-logs

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "nx": {
+    "name": "api-gateway",
     "targets": {
       "prune-lockfile": {
         "dependsOn": [
@@ -46,15 +47,15 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@endra/api-gateway:build",
+          "buildTarget": "api-gateway:build",
           "runBuildTargetDependencies": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@endra/api-gateway:build:development"
+            "buildTarget": "api-gateway:build:development"
           },
           "production": {
-            "buildTarget": "@endra/api-gateway:build:production"
+            "buildTarget": "api-gateway:build:production"
           }
         }
       }

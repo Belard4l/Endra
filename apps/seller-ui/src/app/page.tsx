@@ -1,27 +1,28 @@
+"use client";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import useSeller, { nextOnboardingStep } from "@/hooks/useSeller";
+import { PageLoader } from "@/components/ui";
 
-const Page = () => {
+export default function SellerHome() {
+  const { seller, isLoading } = useSeller();
+  const router = useRouter();
+  useEffect(() => {
+    if (seller) router.replace(nextOnboardingStep(seller) ? "/onboarding" : "/dashboard");
+  }, [seller, router]);
+  if (isLoading || seller) return <PageLoader />;
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-50 p-6">
-      <div className="max-w-xl w-full p-8 bg-white rounded-3xl shadow-lg">
-        <h1 className="text-4xl font-bold text-center mb-4">HUZA Seller Portal</h1>
-        <p className="text-center text-gray-600 mb-8">
-          Access seller signup, login, and payment profile management.
-        </p>
-        <div className="grid gap-4">
-          <Link href="/signup" className="block w-full text-center py-4 rounded-xl bg-blue-600 text-white font-semibold">
-            Seller Signup
-          </Link>
-          <Link href="/login" className="block w-full text-center py-4 rounded-xl bg-black text-white font-semibold">
-            Seller Login
-          </Link>
-          <Link href="/profile" className="block w-full text-center py-4 rounded-xl bg-green-600 text-white font-semibold">
-            Seller Profile
-          </Link>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-brand-900 to-brand-600 p-6">
+      <div className="w-full max-w-lg rounded-3xl bg-white p-8 text-center shadow-xl">
+        <p className="font-Poppins text-3xl font-extrabold text-brand-700">HUZA</p>
+        <h1 className="mt-2 text-2xl font-semibold">Provider portal</h1>
+        <p className="muted mt-2">List your wedding services, manage bookings and get paid every Thursday to MoMo or your bank.</p>
+        <div className="mt-6 grid gap-3">
+          <Link href="/signup" className="btn-primary py-3">Join as a provider</Link>
+          <Link href="/login" className="btn-outline py-3">Log in</Link>
         </div>
       </div>
     </div>
   );
-};
-
-export default Page;
+}

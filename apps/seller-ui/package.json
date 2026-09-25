@@ -6,5 +6,20 @@
     "next": "~16.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "nx": {
+    "name": "seller-ui",
+    "targets": {
+      "dev": {
+        "options": {
+          "port": 3001
+        }
+      },
+      "start": {
+        "options": {
+          "port": 3001
+        }
+      }
+    }
   }
 }

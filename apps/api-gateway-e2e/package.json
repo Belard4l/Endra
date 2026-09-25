@@ -4,7 +4,7 @@
   "private": true,
   "nx": {
     "implicitDependencies": [
-      "@endra/api-gateway"
+      "api-gateway"
     ],
     "targets": {
       "e2e": {
@@ -17,8 +17,8 @@
           "passWithNoTests": true
         },
         "dependsOn": [
-          "@endra/api-gateway:build",
-          "@endra/api-gateway:serve"
+          "api-gateway:build",
+          "api-gateway:serve"
         ]
       }
     }

@@ -1,0 +1,25 @@
+{
+  "name": "@endra/admin-ui",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "next": "~16.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "nx": {
+    "name": "admin-ui",
+    "targets": {
+      "dev": {
+        "options": {
+          "port": 3002
+        }
+      },
+      "start": {
+        "options": {
+          "port": 3002
+        }
+      }
+    }
+  }
+}

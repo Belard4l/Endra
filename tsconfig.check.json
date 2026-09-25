@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "emitDeclarationOnly": false,
+    "declarationMap": false,
+    "incremental": false,
+    "types": ["node", "express"],
+    "rootDir": "."
+  },
+  "include": [
+    "apps/api-gateway/src/**/*.ts",
+    "apps/auth-service/src/**/*.ts",
+    "apps/catalog-service/src/**/*.ts",
+    "apps/booking-service/src/**/*.ts",
+    "apps/admin-service/src/**/*.ts",
+    "packages/**/*.ts"
+  ]
+}

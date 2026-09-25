@@ -3,9 +3,15 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "npx nx run-many --target=serve --all",
-    "user-ui": "npx nx run-many --target=dev --all --projects=user-ui",
-    "seller-ui": "npx nx run-many --target=dev --all --projects=seller-ui"
+    "dev": "npx nx run-many --target=serve --projects=api-gateway,auth-service,catalog-service,booking-service,admin-service --parallel=6",
+    "dev:web": "npx nx run-many --target=dev --projects=user-ui,seller-ui,admin-ui --parallel=3",
+    "user-ui": "npx nx dev user-ui",
+    "seller-ui": "npx nx dev seller-ui",
+    "admin-ui": "npx nx dev admin-ui",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "create-admin": "node scripts/create-admin.js",
+    "postinstall": "prisma generate"
   },
   "private": true,
   "dependencies": {
