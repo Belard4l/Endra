@@ -18,6 +18,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -59,6 +63,39 @@ jobs:
           set -o pipefail
           echo "=== build frontends" >> ci.log
           npx nx run-many -t build --projects=user-ui,seller-ui,admin-ui --parallel=1 --outputStyle=static 2>&1 | tee -a ci.log
+
+      - name: Start MongoDB (replica set) for the smoke test
+        if: always()
+        run: |
+          docker run -d --name mongo -p 27017:27017 mongo:7 --replSet rs0 --bind_ip_all
+          for i in $(seq 1 30); do docker exec mongo mongosh --quiet --eval "db.runCommand({ping:1})" >/dev/null 2>&1 && break; sleep 2; done
+          docker exec mongo mongosh --quiet --eval 'rs.initiate({_id:"rs0",members:[{_id:0,host:"localhost:27017"}]})'
+          sleep 5
+
+      - name: End-to-end smoke test
+        if: always()
+        env:
+          DATABASE_URL: "mongodb://localhost:27017/huza_ci?replicaSet=rs0&directConnection=true"
+          REDIS_DATABASE_URI: "redis://localhost:6379"
+          ACCESS_TOKEN_SECRET: "ci-access-secret"
+          REFRESH_TOKEN_SECRET: "ci-refresh-secret"
+          PAYOUTS_ANY_DAY: "true"
+          DISABLE_JOBS: "true"
+        run: |
+          set -o pipefail
+          echo "=== smoke test" >> ci.log
+          npx prisma db push --skip-generate 2>&1 | tee -a ci.log
+          for svc in auth-service catalog-service booking-service admin-service api-gateway; do
+            node apps/$svc/dist/main.js > /tmp/$svc.log 2>&1 &
+          done
+          for port in 6001 6002 6003 6004 8080; do
+            for i in $(seq 1 30); do curl -s localhost:$port >/dev/null && break; sleep 1; done
+          done
+          node scripts/smoke-test.js 2>&1 | tee -a ci.log || status=$?
+          for svc in auth-service catalog-service booking-service admin-service api-gateway; do
+            echo "=== $svc log" >> ci.log; tail -n 80 /tmp/$svc.log >> ci.log
+          done
+          exit ${status:-0}
 
       # Keeps the full log on a separate branch so it can be read without the Actions UI
       - name: Publish log

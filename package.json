@@ -11,7 +11,8 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "create-admin": "node scripts/create-admin.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "smoke-test": "node scripts/smoke-test.js"
   },
   "private": true,
   "dependencies": {

@@ -1,82 +1,53 @@
-# Endra
+# HUZA — wedding services marketplace (Rwanda)
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Couples find, book and pay for their whole wedding in one place. Providers (venues, photographers,
+caterers, decorators, DJs…) list their services, and HUZA holds each payment until the service is
+delivered, then pays the provider every Thursday to MoMo or a bank account.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+> Repository / package name: **Endra** (`@endra/source`). Product name: **HUZA**.
+> **New here? Follow [SETUP.md](./SETUP.md)** — step-by-step instructions to run everything.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Apps
 
-## Finish your remote caching setup
+| App | Port | What it is |
+|---|---|---|
+| `apps/user-ui` | 3000 | Couple website (Next.js, PWA, English + Kinyarwanda) |
+| `apps/seller-ui` | 3001 | Provider dashboard (Next.js) |
+| `apps/admin-ui` | 3002 | Admin dashboard (Next.js) |
+| `apps/api-gateway` | 8080 | Single entry point; routes `/auth`, `/catalog`, `/booking`, `/admin`; rate limiting |
+| `apps/auth-service` | 6001 | Accounts, OTP email verification, sessions, provider onboarding & verification documents |
+| `apps/catalog-service` | 6002 | Categories, listings, pricing options, availability, public Q&A, reviews, search, recommendations |
+| `apps/booking-service` | 6003 | Basket checkout, Flutterwave payments & webhooks, bookings lifecycle, cancellations, disputes, fines, strikes, Thursday payouts, wedding-day chat, notifications, scheduled jobs |
+| `apps/admin-service` | 6004 | Verification, disputes, fine appeals, payouts, users, categories, settings, Q&A moderation, CSV exports |
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/39Yi24G01S)
+Shared code lives in `packages/`:
 
+- `packages/domain` — the business rules (money, refunds, settlement, penalties, strikes, visibility, payouts, availability, alternatives)
+- `packages/utils/config.ts` — **all policy numbers in one place** (cancellation tiers, fine %, strike levels, dispute presets, districts, default categories)
+- `packages/libs` — Prisma, Redis, Flutterwave, ImageKit, email (Nodemailer + EJS), SMS (Africa's Talking), notifications
+- `packages/middleware` — role-based authentication (separate cookies for couples, providers and admins)
 
-## Run tasks
+Database: MongoDB (Prisma, `prisma/schema.prisma`). Cache/locks/OTPs: Redis (Upstash).
 
-To run the dev server for your app, use:
+## Commands
 
-```sh
-npx nx serve auth-service
+```bash
+npm install                 # also runs `prisma generate`
+npx prisma db push          # sync indexes to MongoDB
+npm run create-admin -- "Your Name" you@example.com "a-strong-password"
+npm run dev                 # all 5 backend services
+npm run dev:web             # the 3 websites
 ```
 
-To create a production bundle:
+## Key rules (summary)
 
-```sh
-npx nx build auth-service
-```
+- **Payments**: couples pay HUZA (MoMo or card via Flutterwave), in full or 30% deposit + balance 14 days before the event.
+- **Earnings**: provider gets 85% of the service amount after the processing fee is shared; HUZA keeps 15%. A small booking fee paid by the couple covers payout transfer fees.
+- **Payouts**: every Thursday 09:00 Kigali time, no holiday exceptions, no minimum; everything released by Wednesday 23:59, minus confirmed fines.
+- **Release**: provider marks delivered (or it's automatic the day after the event); the couple has 72 h to confirm or report a problem.
+- **Couple cancels**: >90 days 100% refund, 30–90 days 50%, <30 days 0%; one free reschedule.
+- **Provider cancels**: couple is offered alternatives (same category, free that day, ±15% price) or a full refund; fine 10/20/30% by notice (50% no-show), waivable on appeal with evidence; confirmed fines add a strike.
+- **Strikes** (12-month window): 1 warning · 2 lower ranking · 3 suspended · 4+ admin reviews a ban.
+- **No pre-wedding chat**: required listing template + public Q&A (contact details blocked); venue revealed ~14 days before once fully paid; chat and phone contact open on the wedding day.
 
-To see all available targets to run for a project, run:
-
-```sh
-npx nx show project auth-service
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/node:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/node:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+See `KNOWN_ISSUES.md` for what's still open.
