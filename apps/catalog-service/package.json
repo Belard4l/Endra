@@ -1,0 +1,31 @@
+{
+  "name": "@endra/catalog-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "catalog-service",
+    "projectType": "application",
+    "sourceRoot": "apps/catalog-service/src",
+    "targets": {
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "catalog-service:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "catalog-service:build:development"
+          },
+          "production": {
+            "buildTarget": "catalog-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}

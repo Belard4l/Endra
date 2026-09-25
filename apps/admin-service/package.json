@@ -1,0 +1,31 @@
+{
+  "name": "@endra/admin-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "admin-service",
+    "projectType": "application",
+    "sourceRoot": "apps/admin-service/src",
+    "targets": {
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "admin-service:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "admin-service:build:development"
+          },
+          "production": {
+            "buildTarget": "admin-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}

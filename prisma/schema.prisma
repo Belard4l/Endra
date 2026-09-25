@@ -1,3 +1,7 @@
+// HUZA — wedding services marketplace (Rwanda)
+// One MongoDB database shared by every backend service.
+// After editing this file run:  npx prisma generate   (and `npx prisma db push` to sync indexes)
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,77 +11,473 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model images {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  file_id String
+// ─────────────────────────── Embedded types ───────────────────────────
+
+type Image {
+  fileId String
+  url    String
+}
+
+type FileRef {
+  fileId  String
   url     String
-  userId  String? @unique @db.ObjectId
-  shopId  String? @unique @db.ObjectId
-  users   users?  @relation(fields: [userId], references: [id])
-  shops   shops?  @relation(fields: [shopId], references: [id])
+  name    String?
+  private Boolean @default(false)
 }
 
+type OptionChoice {
+  id         String
+  label      String
+  priceDelta Int
+}
+
+type OptionGroup {
+  id       String
+  name     String
+  // "single" = pick one, "multiple" = pick any
+  type     String
+  required Boolean        @default(false)
+  choices  OptionChoice[]
+}
+
+type SelectedOption {
+  groupId    String
+  groupName  String
+  choiceId   String
+  label      String
+  priceDelta Int
+}
+
+type PaymentAllocation {
+  bookingId String
+  amount    Int
+}
+
+// ─────────────────────────── Accounts ───────────────────────────
+
+// Couples (role "user") and platform admins (role "admin")
 model users {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  email       String        @unique
-  password    String?
-  following   String[]
-  avatar      images?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  shopReviews shopReviews[]
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String    @unique
+  password        String?
+  phone           String?
+  role            String    @default("user")
+  language        String    @default("en")
+  avatar          Image?
+  weddingDate     String? // YYYY-MM-DD (Kigali)
+  weddingDistrict String?
+  budget          Int?
+  isBanned        Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  bookings        bookings[]
+  reviews         reviews[]
 }
 
-model shopReviews {
+// Service providers
+model sellers {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  email              String    @unique
+  phone_number       String
+  country            String    @default("RW")
+  password           String
+  accountType        String    @default("individual") // individual | company
+
+  // Payout destination
+  paymentMethod      String? // momo | bank
+  momoPhoneNumber    String?
+  momoNetwork        String? // MTN | AIRTEL
+  momoName           String?
+  momoCode           String?
+  bankName           String?
+  bankCode           String?
+  bankAccountNumber  String?
+  bankAccountName    String?
+
+  // Verification (national ID + RDB certificate for companies)
+  verificationStatus String    @default("unsubmitted") // unsubmitted | pending | approved | rejected
+  verificationNote   String?
+  nationalIdNumber   String?
+  nationalIdDoc      FileRef?
+  rdbNumber          String?
+  rdbCertificateDoc  FileRef?
+
+  // Reliability & ranking
+  status             String    @default("active") // active | restricted | suspended | banned
+  banRecommended     Boolean   @default(false)
+  activeStrikes      Int       @default(0)
+  contactViolations  Int       @default(0)
+  completedCount     Int       @default(0)
+  visibilityScore    Float     @default(0)
+
+  shop               shops?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+// A provider's public business profile
+model shops {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  bio            String?
+  category       String
+  district       String?
+  address        String
+  openHours      String?
+  website        String?
+  socialLinks    Json[]
+  avatar         Image?
+  coverBanner    Image?
+  ratings        Float     @default(0)
+  reviewCount    Int       @default(0)
+  capacityPerDay Int       @default(1)
+  blockedDates   String[] // YYYY-MM-DD
+  sellerId       String    @unique @db.ObjectId
+  sellers        sellers   @relation(fields: [sellerId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+// ─────────────────────────── Catalogue ───────────────────────────
+
+model categories {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  name      String
+  nameRw    String?
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model services {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId        String        @db.ObjectId
+  shopId          String        @db.ObjectId
+  title           String
+  slug            String        @unique
+  category        String
+  shortDescription String
+  description     String
+  images          Image[]
+  basePrice       Int
+  priceUnit       String        @default("per event")
+  optionGroups    OptionGroup[]
+  durationHours   Int?
+
+  // Required listing template fields
+  serviceArea     String[] // districts served
+  travelFee       Int           @default(0)
+  included        String[]
+  excluded        String[]
+  requirements    String
+  culturalOptions String?
+  extraTerms      String?
+
+  tags            String[]
+  status          String        @default("draft") // draft | published | hidden
+  isDeleted       Boolean       @default(false)
+  deletedAt       DateTime?
+
+  views           Int           @default(0)
+  saves           Int           @default(0)
+  bookingsCount   Int           @default(0)
+  ratings         Float         @default(0)
+  reviewCount     Int           @default(0)
+  rankScore       Float         @default(0)
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([category, status])
+  @@index([sellerId])
+}
+
+// Public Q&A on listings (the only pre-wedding couple ↔ provider channel)
+model questions {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId  String    @db.ObjectId
+  sellerId   String    @db.ObjectId
+  userId     String    @db.ObjectId
+  userName   String
+  question   String
+  answer     String?
+  answeredAt DateTime?
+  isHidden   Boolean   @default(false)
+  remindedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([serviceId])
+  @@index([sellerId])
+}
+
+model reviews {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  bookingId String   @unique @db.ObjectId
+  serviceId String   @db.ObjectId
+  sellerId  String   @db.ObjectId
   userId    String   @db.ObjectId
   user      users    @relation(fields: [userId], references: [id])
-  rating    Float
-  reviews   String?
+  userName  String
+  rating    Int
+  comment   String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  shopsId   String?  @db.ObjectId
-  shops     shops?   @relation(fields: [shopsId], references: [id])
+
+  @@index([serviceId])
+  @@index([sellerId])
 }
 
-model shops {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  bio         String?
-  category    String
-  avatar      images?
-  coverBanner String?
-  address     String
-  openHours   String?
-  website     String?
-  socialLinks Json[]
-  ratings     Float         @default(0)
-  reviews     shopReviews[]
-  sellerId    String        @unique @db.ObjectId
-  sellers     sellers       @relation(fields: [sellerId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+// ─────────────────────────── Bookings & money ───────────────────────────
+
+// One checkout (a basket can contain several providers' services)
+model orders {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  paymentPlan   String // full | deposit
+  eventLocation String
+  eventDistrict String
+  totalAmount   Int
+  bookingIds    String[]
+  createdAt     DateTime @default(now())
 }
 
-model sellers {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  name              String
-  email             String   @unique
-  phone_number      String
-  country           String
-  password          String
-  stripeId          String?
-  paymentMethod     String?
-  momoPhoneNumber   String?
-  momoCode          String?
-  momoName          String?
-  bankName          String?
-  bankAccountNumber String?
-  bankAccountName   String?
-  shop              shops?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  shopId            String?  @db.ObjectId
-  shopsId           String?  @db.ObjectId
+model bookings {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  orderId          String?          @db.ObjectId
+  userId           String           @db.ObjectId
+  user             users            @relation(fields: [userId], references: [id])
+  sellerId         String           @db.ObjectId
+  shopId           String           @db.ObjectId
+  serviceId        String           @db.ObjectId
+  serviceTitle     String
+  serviceImage     String?
+  category         String
+
+  eventDate        String // YYYY-MM-DD (Kigali)
+  startTime        String // HH:mm
+  endTime          String?
+  eventLocation    String
+  eventDistrict    String
+  notes            String?
+  selectedOptions  SelectedOption[]
+
+  // Pricing (RWF, integers)
+  basePrice        Int
+  optionsTotal     Int              @default(0)
+  travelFee        Int              @default(0)
+  price            Int // service total (base + options + travel)
+  bookingFee       Int              @default(0) // platform fee paid by the couple (covers payouts)
+  paymentPlan      String // full | deposit
+  depositAmount    Int
+  balanceDueDate   String? // YYYY-MM-DD
+  amountPaid       Int              @default(0) // everything paid, incl. booking fee
+  collectionFee    Int              @default(0) // processor fee allocated to this booking
+  refundedAmount   Int              @default(0)
+
+  // pending_payment | confirmed | completed | disputed | released
+  // | cancelled_by_couple | cancelled_by_provider | expired | replaced
+  status           String           @default("pending_payment")
+  // unpaid | deposit_paid | paid | refunded | partially_refunded
+  paymentStatus    String           @default("unpaid")
+  holdExpiresAt    DateTime?
+
+  rescheduleUsed   Boolean          @default(false)
+  completedAt      DateTime?
+  releaseAt        DateTime?
+  releasedAt       DateTime?
+  coupleConfirmed  Boolean          @default(false)
+  cancelledAt      DateTime?
+  // For provider cancellations: awaiting_choice | replaced | refunded
+  resolution       String?
+  resolutionDeadline DateTime?
+  replacementOfId  String?          @db.ObjectId
+  replacedById     String?          @db.ObjectId
+
+  // Settlement (set when released)
+  providerAmount   Int              @default(0)
+  platformAmount   Int              @default(0)
+  payoutId         String?          @db.ObjectId
+
+  reviewed         Boolean          @default(false)
+  balanceReminderSent Boolean       @default(false)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([userId])
+  @@index([sellerId, eventDate])
+  @@index([status])
+}
+
+model payments {
+  id            String              @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String              @db.ObjectId
+  txRef         String              @unique
+  purpose       String // initial | balance | topup
+  amount        Int
+  fee           Int                 @default(0)
+  currency      String              @default("RWF")
+  status        String              @default("pending") // pending | successful | failed
+  flwTransactionId String?
+  paymentLink   String?
+  allocations   PaymentAllocation[]
+  refunded      Int                 @default(0)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  @@index([userId])
+}
+
+model cancellations {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  bookingId       String   @db.ObjectId
+  initiatedBy     String // couple | provider | admin
+  reasonCategory  String
+  reason          String?
+  evidence        FileRef[]
+  daysBeforeEvent Int
+  refundAmount    Int
+  providerShare   Int      @default(0)
+  createdAt       DateTime @default(now())
+}
+
+model disputes {
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  bookingId             String    @db.ObjectId
+  userId                String    @db.ObjectId
+  sellerId              String    @db.ObjectId
+  problemType           String
+  description           String
+  evidence              FileRef[]
+  proposedRefundPercent Int
+  status                String    @default("open") // open | resolved | rejected
+  resolvedRefundPercent Int?
+  adminNote             String?
+  providerResponse      String?
+  createdAt             DateTime  @default(now())
+  resolvedAt            DateTime?
+}
+
+model penalties {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId       String    @db.ObjectId
+  bookingId      String    @db.ObjectId
+  amount         Int
+  reason         String
+  status         String    @default("pending") // pending | appealed | waived | confirmed | deducted
+  appealDeadline DateTime
+  appealText     String?
+  appealEvidence FileRef[]
+  decisionNote   String?
+  decidedAt      DateTime?
+  deductedAmount Int       @default(0)
+  createdAt      DateTime  @default(now())
+
+  @@index([sellerId, status])
+}
+
+model strikes {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId  String   @db.ObjectId
+  reason    String
+  penaltyId String?  @db.ObjectId
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([sellerId])
+}
+
+model payouts {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId        String   @db.ObjectId
+  batchDate       String // YYYY-MM-DD (the Thursday)
+  gross           Int
+  penaltyDeducted Int      @default(0)
+  amount          Int
+  payoutFee       Int      @default(0)
+  method          String
+  destination     Json
+  // pending | processing | successful | failed | settled
+  status          String   @default("pending")
+  reference       String   @unique
+  flwTransferId   String?
+  bookingIds      String[]
+  failureReason   String?
+  attempts        Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([sellerId])
+}
+
+model ledgerEntries {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId    String?  @db.ObjectId
+  bookingId   String?  @db.ObjectId
+  paymentId   String?  @db.ObjectId
+  payoutId    String?  @db.ObjectId
+  type        String
+  amount      Int
+  description String
+  createdAt   DateTime @default(now())
+
+  @@index([sellerId])
+  @@index([bookingId])
+}
+
+// Wedding-day coordination chat (opens on the event date only)
+model messages {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  bookingId  String   @db.ObjectId
+  senderType String // user | seller
+  senderId   String   @db.ObjectId
+  text       String
+  createdAt  DateTime @default(now())
+
+  @@index([bookingId])
+}
+
+// ─────────────────────────── Platform ───────────────────────────
+
+model notifications {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  recipientId   String
+  recipientType String // user | seller | admin
+  title         String
+  message       String
+  link          String?
+  type          String   @default("info")
+  isRead        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  @@index([recipientId, recipientType])
+}
+
+model userEvents {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String?  @db.ObjectId
+  action    String // view | save | unsave | add_to_basket | check_date | book
+  serviceId String?  @db.ObjectId
+  sellerId  String?  @db.ObjectId
+  category  String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model siteSettings {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  key                 String   @unique
+  commissionPercent   Int      @default(15)
+  bookingFee          Int      @default(1000)
+  depositPercent      Int      @default(30)
+  balanceDueDays      Int      @default(14)
+  disputeWindowHours  Int      @default(72)
+  appealWindowDays    Int      @default(5)
+  locationRevealDays  Int      @default(14)
+  heroTitle           String?
+  heroSubtitle        String?
+  heroImage           Image?
+  updatedAt           DateTime @updatedAt
 }

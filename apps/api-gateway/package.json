@@ -60,9 +60,5 @@
       }
     }
   },
-  "dependencies": {
-    "@prisma/client": "6.19",
-    "express": "^4.21.2",
-    "prisma": "6.19"
-  }
+  "dependencies": {}
 }
