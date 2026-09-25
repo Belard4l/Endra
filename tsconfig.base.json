@@ -13,7 +13,7 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,

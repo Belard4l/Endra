@@ -63,15 +63,13 @@ jobs:
       # Keeps the full log on a separate branch so it can be read without the Actions UI
       - name: Publish log
         if: always() && github.event_name == 'push'
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mkdir /tmp/logrepo && cp ci.log /tmp/logrepo/latest.log && cd /tmp/logrepo
+          echo "${GITHUB_SHA}" > latest-sha.txt
+          git init -q -b ci-logs
           git config user.name "huza-ci"
           git config user.email "ci@users.noreply.github.com"
-          cp ci.log /tmp/ci.log
-          git fetch origin ci-logs || true
-          git switch --orphan ci-logs-tmp
-          git rm -rf . >/dev/null 2>&1 || true
-          cp /tmp/ci.log "latest.log"
-          echo "${GITHUB_SHA} ${{ job.status }}" > latest-sha.txt
-          git add latest.log latest-sha.txt
-          git commit -m "CI log for ${GITHUB_SHA}" >/dev/null
-          git push -f origin HEAD:ci-logs
+          git add . && git commit -qm "CI log for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-logs

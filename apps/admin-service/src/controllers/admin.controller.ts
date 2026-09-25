@@ -391,7 +391,10 @@ export const retry = async (req: any, res: Response) => {
 
 /** Manual run — only on Thursdays (in case the scheduled run was missed) */
 export const runPayoutsNow = async (_req: any, res: Response) => {
-  if (kigaliWeekday() !== 4) throw new ValidationError("Payouts only run on Thursdays (Kigali time).");
+  // PAYOUTS_ANY_DAY=true lets you test payouts on other days (never set it in production)
+  if (kigaliWeekday() !== 4 && process.env.PAYOUTS_ANY_DAY !== "true") {
+    throw new ValidationError("Payouts only run on Thursdays (Kigali time).");
+  }
   res.json(await runWeeklyPayouts());
 };
 
