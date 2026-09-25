@@ -307,6 +307,22 @@ async function makeService(p, title) {
   r = await couple.get(`/catalog/api/services/${svcA.id}/also-booked`);
   expectOk("also-booked", r);
 
+  if (process.env.SMOKE_ACCOUNTS_FILE) {
+    require("fs").writeFileSync(
+      process.env.SMOKE_ACCOUNTS_FILE,
+      JSON.stringify({
+        admin: { email: adminEmail, password: "admin-password-123" },
+        couple: { email: coupleEmail, password: "password123" },
+        provider: { email: photoA.email.toLowerCase(), password: "password123" },
+        serviceSlug: svcA.slug,
+        coupleBookingId: replacement.id,
+        releasedBookingId: b3.id,
+        providerBookingId: b3.id,
+        providerId: photoA.id,
+      })
+    );
+  }
+
   console.log(`\n${passed} passed, ${failures.length} failed`);
   if (failures.length) console.log("Failed:\n - " + failures.join("\n - "));
   await prisma.$disconnect();
