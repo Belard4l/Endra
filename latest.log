@@ -1,0 +1,651 @@
+npm warn deprecated whatwg-encoding@2.0.0: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated imagekit@6.0.0: Please use @imagekit/nodejs
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@8.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+> @endra/source@0.0.0 postinstall
+> prisma generate
+
+Prisma schema loaded from prisma/schema.prisma
+┌─────────────────────────────────────────────────────────┐
+│  Update available 6.19.2 -> 8.0.0-rc.17                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (v6.19.2) to ./node_modules/@prisma/client in 198ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+
+added 1649 packages in 33s
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v6.19.2) to ./node_modules/@prisma/client in 148ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+=== typecheck backend
+=== typecheck user-ui
+=== typecheck seller-ui
+=== typecheck admin-ui
+=== build backend
+(node:2846) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ NX   Nx Cloud manually disabled
+
+Nx will continue running, but nothing will be written or read from the remote cache.
+Run details will also not be available in the Nx Cloud UI.
+
+If this wasn't intentional, check for the NX_NO_CLOUD environment variable or the --no-cloud flag.
+
+
+ NX   Running target build for 5 projects:
+
+- api-gateway
+- auth-service
+- catalog-service
+- booking-service
+- admin-service
+
+
+
+::group::✅ > nx run api-gateway:build
+
+> webpack-cli build --node-env=production
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 3.21 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (d7d15132c9d1d9ec)
+::endgroup::
+::group::✅ > nx run auth-service:build
+
+> webpack-cli build --node-env=production
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 70.5 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (120202002b21e330)
+::endgroup::
+::group::✅ > nx run admin-service:build
+
+> webpack-cli build --node-env=production
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 124 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (cf7d290768a1678b)
+::endgroup::
+::group::✅ > nx run catalog-service:build
+
+> webpack-cli build --node-env=production
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 94.2 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (1b3aa85ba8580dc5)
+::endgroup::
+::group::✅ > nx run booking-service:build
+
+> webpack-cli build --node-env=production
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 147 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (809efa0ba2965403)
+::endgroup::
+
+
+ NX   Successfully ran target build for 5 projects
+
+
+=== build frontends
+
+ NX   Nx Cloud manually disabled
+
+Nx will continue running, but nothing will be written or read from the remote cache.
+Run details will also not be available in the Nx Cloud UI.
+
+If this wasn't intentional, check for the NX_NO_CLOUD environment variable or the --no-cloud flag.
+
+
+ NX   Running target build for 3 projects:
+
+- user-ui
+- seller-ui
+- admin-ui
+
+
+
+::group::✅ > nx run admin-ui:build
+
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[33m[1m⚠[22m[39m No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+   [1m[38;2;173;127;168m▲ Next.js 16.0.11[39m[22m (Turbopack)
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ [32m[1m✓[22m[39m Compiled successfully in 3.3s
+ [37m[1m [22m[39m Running TypeScript ...
+ [33m[1m⚠[22m[39m TypeScript project references are not fully supported. Attempting to build in incremental mode.
+ [37m[1m [22m[39m Collecting page data using 3 workers ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (0/15) ...
+(node:3254) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (3/15) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (7/15) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (11/15) 
+ [32m[1m✓[22m[39m Generating static pages using 3 workers (15/15) in 498.3ms
+ [37m[1m [22m[39m Finalizing page optimization ...
+
+[4mRoute (app)[24m
+┌ ○ /
+├ ○ /_not-found
+├ ○ /bookings
+├ ƒ /bookings/[id]
+├ ○ /categories
+├ ○ /dashboard
+├ ○ /disputes
+├ ○ /login
+├ ○ /notifications
+├ ○ /payouts
+├ ○ /penalties
+├ ○ /providers
+├ ƒ /providers/[id]
+├ ○ /questions
+├ ○ /settings
+└ ○ /users
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+::endgroup::
+::group::✅ > nx run user-ui:build
+
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[33m[1m⚠[22m[39m No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+   [1m[38;2;173;127;168m▲ Next.js 16.0.11[39m[22m (Turbopack)
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ [32m[1m✓[22m[39m Compiled successfully in 3.5s
+ [37m[1m [22m[39m Running TypeScript ...
+ [33m[1m⚠[22m[39m TypeScript project references are not fully supported. Attempting to build in incremental mode.
+ [37m[1m [22m[39m Collecting page data using 3 workers ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (0/18) ...
+(node:3830) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (4/18) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (8/18) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (13/18) 
+ [32m[1m✓[22m[39m Generating static pages using 3 workers (18/18) in 562.2ms
+ [37m[1m [22m[39m Finalizing page optimization ...
+
+[4mRoute (app)[24m
+┌ ○ /
+├ ○ /_not-found
+├ ○ /basket
+├ ○ /become-provider
+├ ○ /bookings
+├ ƒ /bookings/[id]
+├ ○ /checkout/callback
+├ ○ /checkout/mock
+├ ○ /forgot-password
+├ ○ /how-it-works
+├ ○ /login
+├ ○ /notifications
+├ ○ /profile
+├ ○ /providers
+├ ƒ /providers/[id]
+├ ○ /saved
+├ ○ /services
+├ ƒ /services/[slug]
+├ ○ /signup
+└ ○ /terms
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+::endgroup::
+::group::✅ > nx run seller-ui:build
+
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[33m[1m⚠[22m[39m No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+   [1m[38;2;173;127;168m▲ Next.js 16.0.11[39m[22m (Turbopack)
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [33m[1m⚠[22m[39m Found lockfile missing swc dependencies, run next locally to automatically patch
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ [32m[1m✓[22m[39m Compiled successfully in 3.5s
+ [37m[1m [22m[39m Running TypeScript ...
+ [33m[1m⚠[22m[39m TypeScript project references are not fully supported. Attempting to build in incremental mode.
+ [37m[1m [22m[39m Collecting page data using 3 workers ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (0/19) ...
+(node:4455) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ [37m[1m [22m[39m Generating static pages using 3 workers (4/19) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (9/19) 
+ [37m[1m [22m[39m Generating static pages using 3 workers (14/19) 
+ [32m[1m✓[22m[39m Generating static pages using 3 workers (19/19) in 545.2ms
+ [37m[1m [22m[39m Finalizing page optimization ...
+
+[4mRoute (app)[24m
+┌ ○ /
+├ ○ /_not-found
+├ ○ /availability
+├ ○ /bookings
+├ ƒ /bookings/[id]
+├ ○ /dashboard
+├ ○ /forgot-password
+├ ○ /login
+├ ○ /notifications
+├ ○ /onboarding
+├ ○ /payouts
+├ ○ /penalties
+├ ○ /questions
+├ ○ /reviews
+├ ○ /services
+├ ƒ /services/[id]/edit
+├ ○ /services/new
+├ ○ /settings
+├ ○ /signup
+└ ○ /verification
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+::endgroup::
+
+
+ NX   Successfully ran target build for 3 projects
+
+
+=== smoke test
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": MongoDB database "huza_ci" at "localhost:27017"
+Applying the following changes:
+
+[+] Collection `users`
+[+] Collection `sellers`
+[+] Collection `shops`
+[+] Collection `categories`
+[+] Collection `services`
+[+] Collection `questions`
+[+] Collection `reviews`
+[+] Collection `orders`
+[+] Collection `bookings`
+[+] Collection `payments`
+[+] Collection `cancellations`
+[+] Collection `disputes`
+[+] Collection `penalties`
+[+] Collection `strikes`
+[+] Collection `payouts`
+[+] Collection `ledgerEntries`
+[+] Collection `messages`
+[+] Collection `notifications`
+[+] Collection `userEvents`
+[+] Collection `siteSettings`
+[+] Unique index `users_email_key` on ({"email":1})
+[+] Unique index `sellers_email_key` on ({"email":1})
+[+] Unique index `shops_sellerId_key` on ({"sellerId":1})
+[+] Unique index `categories_slug_key` on ({"slug":1})
+[+] Unique index `services_slug_key` on ({"slug":1})
+[+] Index `services_category_status_idx` on ({"category":1,"status":1})
+[+] Index `services_sellerId_idx` on ({"sellerId":1})
+[+] Index `questions_serviceId_idx` on ({"serviceId":1})
+[+] Index `questions_sellerId_idx` on ({"sellerId":1})
+[+] Unique index `reviews_bookingId_key` on ({"bookingId":1})
+[+] Index `reviews_serviceId_idx` on ({"serviceId":1})
+[+] Index `reviews_sellerId_idx` on ({"sellerId":1})
+[+] Index `bookings_userId_idx` on ({"userId":1})
+[+] Index `bookings_sellerId_eventDate_idx` on ({"sellerId":1,"eventDate":1})
+[+] Index `bookings_status_idx` on ({"status":1})
+[+] Unique index `payments_txRef_key` on ({"txRef":1})
+[+] Index `payments_userId_idx` on ({"userId":1})
+[+] Index `penalties_sellerId_status_idx` on ({"sellerId":1,"status":1})
+[+] Index `strikes_sellerId_idx` on ({"sellerId":1})
+[+] Unique index `payouts_reference_key` on ({"reference":1})
+[+] Index `payouts_sellerId_idx` on ({"sellerId":1})
+[+] Index `ledgerEntries_sellerId_idx` on ({"sellerId":1})
+[+] Index `ledgerEntries_bookingId_idx` on ({"bookingId":1})
+[+] Index `messages_bookingId_idx` on ({"bookingId":1})
+[+] Index `notifications_recipientId_recipientType_idx` on ({"recipientId":1,"recipientType":1})
+[+] Index `userEvents_userId_idx` on ({"userId":1})
+[+] Unique index `siteSettings_key_key` on ({"key":1})
+
+
+🚀  Your database indexes are now in sync with your Prisma schema. Done in 306ms
+
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+HUZA smoke test against http://localhost:8080 (run muhg70y3)
+
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✔ Admin admin-muhg70y3@test.huza created.
+  ✔ admin login
+  ✔ categories seeded
+  ✔ photoA: registration sends OTP
+  ✔ photoA: verify OTP creates account + session
+  ✔ photoA: business profile
+  ✔ photoA: MoMo payout method
+  ✔ photoA: verification submitted
+  ✔ photoA: session shows pending verification
+  ✔ photoB: registration sends OTP
+  ✔ photoB: verify OTP creates account + session
+  ✔ photoB: business profile
+  ✔ photoB: MoMo payout method
+  ✔ photoB: verification submitted
+  ✔ photoB: session shows pending verification
+  ✔ validation rejects an incomplete listing
+  ✔ contact details blocked in listings
+  ✔ admin approves photoA
+  ✔ admin approves photoB
+  ✔ photoA: create & publish "Full-day wedding photography"
+  ✔ photoB: create & publish "Cinematic wedding photography"
+  ✔ couple registration
+  ✔ couple verify
+  ✔ couple login
+  ✔ couple profile
+  ✔ browse shows both services
+  ✔ service detail
+  ✔ quote = base + option + travel fee
+  ✔ availability check
+  ✔ contact details blocked in questions
+  ✔ ask a public question
+  ✔ provider answers publicly
+  ✔ ask a second question
+  ✔ unanswered questions filter
+  ✔ recommendations respond
+  ✔ checkout (deposit plan)
+  ✔ amount due now = deposit + booking fee
+  ✔ mock payment link
+  ✔ mock payment succeeds
+  ✔ payment verified
+  ✔ booking confirmed with deposit
+  ✔ capacity: same provider/date can't be double booked
+  ✔ provider can't see venue before full payment
+  ✔ balance payment link
+  ✔ balance paid → fully paid
+  ✔ free reschedule
+  ✔ second reschedule refused
+  ✔ cancellation quote: >90 days → 100%
+  ✔ checkout booking 2 (full)
+  ✔ provider cancels booking 2
+  ✔ couple sees alternatives (provider B)
+  ✔ couple picks replacement
+  ✔ replacement is confirmed with moved payment
+  ✔ fine pending for 40 days' notice (10%)
+  ✔ provider appeals with evidence
+  ✔ admin waives the fine
+  ✔ waived fine adds no strike
+  ✔ checkout booking 3 (deposit requested, event in 5 days → full)
+  ✔ event within balance window charges in full
+  ✔ venue revealed (fully paid, within 14 days)
+  ✔ can't mark delivered before the event
+  ✔ provider marks delivered
+  ✔ couple reports late arrival
+  ✔ provider responds
+  ✔ admin confirms 20% refund
+  ✔ refund = 20% of service paid
+  ✔ released with 85/15 split after fees
+  ✔ admin sees next Thursday batch
+  ✔ provider dashboard shows next payout
+  ✔ admin runs payouts (PAYOUTS_ANY_DAY)
+  ✔ provider A payout sent (mock)
+  ✔ couple reviews the released booking
+  ✔ review is public
+  ✔ couple cancellation refunds 100% of service
+  ✔ chat closed before the wedding day
+  ✔ admin GET /admin/api/dashboard
+  ✔ admin GET /admin/api/providers
+  ✔ admin GET /admin/api/providers/6ab6e19f95015ef4e9d15590
+  ✔ admin GET /admin/api/bookings
+  ✔ admin GET /admin/api/bookings/6ab6e1a09046c5e91bc7e7bc
+  ✔ admin GET /admin/api/payouts
+  ✔ admin GET /admin/api/penalties?status=all
+  ✔ admin GET /admin/api/users
+  ✔ admin GET /admin/api/settings
+  ✔ admin GET /admin/api/categories
+  ✔ admin GET /admin/api/questions
+  ✔ provider dashboard
+  ✔ couple received notifications
+  ✔ providers list
+  ✔ also-booked
+
+89 passed, 0 failed
+=== auth-service log
+[auth-service] listening at http://localhost:6001/api
+[email:dev] to photoa-muhg70y3@test.huza | Your HUZA verification code | data: {"name":"photoA Owner","otp":"927791"}
+[imagekit] not configured — storing file inline (development only)
+[email:dev] to photob-muhg70y3@test.huza | Your HUZA verification code | data: {"name":"photoB Owner","otp":"628188"}
+[imagekit] not configured — storing file inline (development only)
+[email:dev] to couple-muhg70y3@test.huza | Your HUZA verification code | data: {"name":"Aline Uwase","otp":"740934"}
+=== catalog-service log
+[catalog-service] listening at http://localhost:6002/api
+Error POST /api/seller/services - Title must be at least 5 characters
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Contact details are not allowed | data: {"name":"photoA Owner","title":"Contact details are not allowed","message":"Sharing phone numbers, emails, links or social handles before the wedding day is not allowed. 2 more attempt(s) will add a strike."}
+Error POST /api/seller/services - "Short description" contains phone number. Contact details can't be shared on HUZA before the wedding day.
+[imagekit] not configured — storing file inline (development only)
+[imagekit] not configured — storing file inline (development only)
+Error POST /api/services/6ab6e19f93066d3647372320/questions - Please don't share or ask for contact details (phone number, messaging app). Bookings made outside HUZA have no payment protection, no refunds and no replacement if the provider cancels.
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: New question on your listing | data: {"name":"photoA Owner","title":"New question on your listing","message":"A couple asked about \"Full-day wedding photography\": Do you travel to Musanze?","link":"http://localhost:3001/questions"}
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Your question was answered | data: {"name":"Aline Uwase","title":"Your question was answered","message":"Full-day wedding photography: Yes, for a small travel fee.","link":"http://localhost:3000/services/full-day-wedding-photography-d80faa#questions"}
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: New question on your listing | data: {"name":"photoA Owner","title":"New question on your listing","message":"A couple asked about \"Full-day wedding photography\": Can you shoot a Gusaba ceremony too?","link":"http://localhost:3001/questions"}
+=== booking-service log
+[booking-service] FLUTTERWAVE_SECRET_KEY not set — running payments in MOCK mode
+[booking-service] listening at http://localhost:6003/api
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Booking confirmed | data: {"name":"Aline Uwase","title":"Booking confirmed","message":"Full-day wedding photography is booked for 2027-01-03 at 10:00. Paid so far: 181,000 RWF.","link":"http://localhost:3000/bookings/6ab6e19f9046c5e91bc7e79d"}
+[sms:dev] to +250788000111: HUZA: Booking confirmed: Full-day wedding photography on 2027-01-03.
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: New booking | data: {"name":"photoA Owner","title":"New booking","message":"You have a new booking for Full-day wedding photography on 2027-01-03 at 10:00 in Gasabo.","link":"http://localhost:3001/bookings/6ab6e19f9046c5e91bc7e79d"}
+[sms:dev] to +250788123456: HUZA: New booking: Full-day wedding photography on 2027-01-03.
+Error POST /api/checkout - Full-day wedding photography on 2027-01-03: The provider is fully booked on this date.
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Payment received | data: {"name":"Aline Uwase","title":"Payment received","message":"We received 420,000 RWF for Full-day wedding photography.","link":"http://localhost:3000/bookings/6ab6e19f9046c5e91bc7e79d"}
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Booking rescheduled | data: {"name":"photoA Owner","title":"Booking rescheduled","message":"Full-day wedding photography moved from 2027-01-03 10:00 to 2027-01-13 10:00.","link":"http://localhost:3001/bookings/6ab6e19f9046c5e91bc7e79d"}
+[sms:dev] to +250788123456: HUZA: Booking rescheduled
+Error POST /api/bookings/6ab6e19f9046c5e91bc7e79d/reschedule - The free reschedule for this booking has already been used
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Booking confirmed | data: {"name":"Aline Uwase","title":"Booking confirmed","message":"Full-day wedding photography is booked for 2026-11-04 at 09:00. Paid so far: 601,000 RWF.","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7aa"}
+[sms:dev] to +250788000111: HUZA: Booking confirmed: Full-day wedding photography on 2026-11-04.
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: New booking | data: {"name":"photoA Owner","title":"New booking","message":"You have a new booking for Full-day wedding photography on 2026-11-04 at 09:00 in Gasabo.","link":"http://localhost:3001/bookings/6ab6e1a09046c5e91bc7e7aa"}
+[sms:dev] to +250788123456: HUZA: New booking: Full-day wedding photography on 2026-11-04.
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Cancellation fine pending | data: {"name":"photoA Owner","title":"Cancellation fine pending","message":"Cancelled Full-day wedding photography 40 days before the event (2026-11-04). A fine of 60,000 RWF (10%) is pending. If this was an emergency, appeal with evidence before 2026-09-30. Without an appeal the fine is confirmed and counts as a strike.","link":"http://localhost:3001/penalties"}
+[sms:dev] to +250788123456: HUZA: A cancellation fine of 60,000 RWF is pending. Appeal within 5 days in your HUZA dashboard.
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Your provider cancelled — your money is safe | data: {"name":"Aline Uwase","title":"Your provider cancelled — your money is safe","message":"Full-day wedding photography on 2026-11-04 was cancelled by the provider. We've found available alternatives in the same category and price range. Choose a replacement or a full refund before 2026-10-02.","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7aa"}
+[sms:dev] to +250788000111: HUZA: Your photography provider for 2026-11-04 cancelled. Your money is safe - open HUZA to pick a replacement or refund.
+[email:dev] to photob-muhg70y3@test.huza | HUZA: New booking (replacement) | data: {"name":"photoB Owner","title":"New booking (replacement)","message":"You have a new booking for Cinematic wedding photography on 2026-11-04 at 09:00 in Gasabo.","link":"http://localhost:3001/bookings/6ab6e1a09046c5e91bc7e7b7"}
+[sms:dev] to +250788123456: HUZA: New booking (replacement)
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Replacement booked | data: {"name":"Aline Uwase","title":"Replacement booked","message":"Cinematic wedding photography is booked. Your payment was moved over; 20,000 RWF remains to be paid before 2026-10-21.","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7b7"}
+[sms:dev] to +250788000111: HUZA: Replacement booked
+[imagekit] not configured — storing file inline (development only)
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Booking confirmed | data: {"name":"Aline Uwase","title":"Booking confirmed","message":"Full-day wedding photography is booked for 2026-09-30 at 11:00. Paid so far: 601,000 RWF.","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[sms:dev] to +250788000111: HUZA: Booking confirmed: Full-day wedding photography on 2026-09-30.
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: New booking | data: {"name":"photoA Owner","title":"New booking","message":"You have a new booking for Full-day wedding photography on 2026-09-30 at 11:00 in Kicukiro.","link":"http://localhost:3001/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[sms:dev] to +250788123456: HUZA: New booking: Full-day wedding photography on 2026-09-30.
+Error POST /api/seller/bookings/6ab6e1a09046c5e91bc7e7bc/complete - You can mark the service as delivered on or after the event date
+[email:dev] to couple-muhg70y3@test.huza | HUZA: How did it go? | data: {"name":"Aline Uwase","title":"How did it go?","message":"Full-day wedding photography was marked as delivered. If everything went as agreed, confirm it. If something went wrong, report a problem within 72 hours — after that the provider is paid.","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[sms:dev] to +250788000111: HUZA: Was Full-day wedding photography delivered as agreed? Confirm or report a problem in HUZA within 72h.
+[imagekit] not configured — storing file inline (development only)
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: A problem was reported | data: {"name":"photoA Owner","title":"A problem was reported","message":"The couple reported \"Arrived significantly late\" for Full-day wedding photography on 2026-09-24. Payment is on hold until HUZA reviews it. You can add your response in the booking page.","link":"http://localhost:3001/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[sms:dev] to +250788123456: HUZA: A problem was reported
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Booking cancelled by the couple | data: {"name":"photoA Owner","title":"Booking cancelled by the couple","message":"The booking for Full-day wedding photography on 2027-01-13 was cancelled. No payment is due to you for this booking.","link":"http://localhost:3001/bookings/6ab6e19f9046c5e91bc7e79d"}
+[sms:dev] to +250788123456: HUZA: Booking on 2027-01-13 (Full-day wedding photography) was cancelled by the couple.
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Booking cancelled | data: {"name":"Aline Uwase","title":"Booking cancelled","message":"Full-day wedding photography on 2027-01-13 is cancelled. 600,000 RWF is being refunded to you.","link":"http://localhost:3000/bookings/6ab6e19f9046c5e91bc7e79d"}
+Error POST /api/bookings/6ab6e1a09046c5e91bc7e7b7/messages - Chat opens on the wedding day only. Use the listing's public Q&A before then.
+=== admin-service log
+[admin-service] listening at http://localhost:6004/api
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: You're verified! | data: {"name":"photoA Owner","title":"You're verified!","message":"Your identity documents were approved. You can now publish listings and take bookings on HUZA.","link":"http://localhost:3001/services"}
+[sms:dev] to +250788123456: HUZA: You're verified!
+[email:dev] to photob-muhg70y3@test.huza | HUZA: You're verified! | data: {"name":"photoB Owner","title":"You're verified!","message":"Your identity documents were approved. You can now publish listings and take bookings on HUZA.","link":"http://localhost:3001/services"}
+[sms:dev] to +250788123456: HUZA: You're verified!
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Fine waived | data: {"name":"photoA Owner","title":"Fine waived","message":"Your appeal was accepted and the fine of 60,000 RWF was waived: Valid medical emergency. No strike was added.","link":"http://localhost:3001/penalties"}
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Earnings released | data: {"name":"photoA Owner","title":"Earnings released","message":"390,150 RWF from Full-day wedding photography (2026-09-24) will be paid on the next Thursday payout.","link":"http://localhost:3001/payouts"}
+[email:dev] to couple-muhg70y3@test.huza | HUZA: Dispute resolved | data: {"name":"Aline Uwase","title":"Dispute resolved","message":"120,000 RWF (20%) is being refunded for Full-day wedding photography. Note: Late arrival confirmed","link":"http://localhost:3000/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[sms:dev] to +250788000111: HUZA: Dispute resolved
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Dispute resolved | data: {"name":"photoA Owner","title":"Dispute resolved","message":"The dispute for Full-day wedding photography was resolved with a 20% refund to the couple. The rest of your earnings will be paid on Thursday.","link":"http://localhost:3001/bookings/6ab6e1a09046c5e91bc7e7bc"}
+[email:dev] to photoa-muhg70y3@test.huza | HUZA: Payout sent | data: {"name":"photoA Owner","title":"Payout sent","message":"390,150 RWF has been sent to your MoMo.","link":"http://localhost:3001/payouts"}
+[sms:dev] to +250788123456: HUZA: HUZA payout of 390,150 RWF sent.
+[payouts] 2026-09-25: 1 payouts created from 1 bookings
+=== api-gateway log
+[0mPOST /auth/api/create-shop [32m201[0m 7.441 ms - 445[0m
+[0mPOST /auth/api/save-seller-payment [32m200[0m 6.586 ms - 703[0m
+[0mPOST /auth/api/seller-verification [32m200[0m 10.419 ms - 758[0m
+[0mGET /auth/api/logged-in-seller [32m200[0m 3.005 ms - 1187[0m
+[0mPOST /catalog/api/seller/services [33m400[0m 7.480 ms - 66[0m
+[0mPOST /catalog/api/seller/services [33m400[0m 15.736 ms - 139[0m
+[0mPOST /admin/api/providers/6ab6e19f95015ef4e9d15590/verify [32m200[0m 30.640 ms - 16[0m
+[0mPOST /admin/api/providers/6ab6e19f95015ef4e9d15593/verify [32m200[0m 16.756 ms - 16[0m
+[0mPOST /catalog/api/seller/services [32m201[0m 9.498 ms - 1726[0m
+[0mPOST /catalog/api/seller/services [32m201[0m 7.290 ms - 1728[0m
+[0mPOST /auth/api/user-registration [32m200[0m 4.080 ms - 44[0m
+[0mPOST /auth/api/verify-user [32m201[0m 75.519 ms - 65[0m
+[0mPOST /auth/api/login-user [32m200[0m 72.319 ms - 336[0m
+[0mPUT /auth/api/user-profile [32m200[0m 6.873 ms - 342[0m
+[0mGET /catalog/api/services?category=photography [32m200[0m 16.661 ms - 1493[0m
+[0mGET /catalog/api/services/full-day-wedding-photography-d80faa [32m200[0m 14.101 ms - 2965[0m
+[0mPOST /catalog/api/services/6ab6e19f93066d3647372320/quote [32m200[0m 6.710 ms - 230[0m
+[0mGET /catalog/api/services/6ab6e19f93066d3647372320/availability?date=2027-01-03 [32m200[0m 9.816 ms - 32[0m
+[0mPOST /catalog/api/services/6ab6e19f93066d3647372320/questions [33m400[0m 2.624 ms - 217[0m
+[0mPOST /catalog/api/services/6ab6e19f93066d3647372320/questions [32m201[0m 10.496 ms - 323[0m
+[0mPOST /catalog/api/seller/questions/6ab6e19f93066d3647372325/answer [32m200[0m 11.076 ms - 371[0m
+[0mPOST /catalog/api/services/6ab6e19f93066d3647372320/questions [32m201[0m 9.824 ms - 334[0m
+[0mGET /catalog/api/seller/questions?status=unanswered [32m200[0m 5.014 ms - 465[0m
+[0mGET /catalog/api/recommendations [32m200[0m 14.960 ms - 3938[0m
+[0mPOST /booking/api/checkout [32m201[0m 32.366 ms - 218[0m
+[0mGET /catalog/api/settings/public [32m200[0m 2.800 ms - 174[0m
+[0mPOST /booking/api/payments/mock-complete [32m200[0m 43.244 ms - 23[0m
+[0mGET /booking/api/payments/verify?tx_ref=HUZA-1790370207823-c765bd [32m200[0m 4.782 ms - 540[0m
+[0mGET /booking/api/my-bookings [32m200[0m 5.038 ms - 1529[0m
+[0mPOST /booking/api/checkout [33m400[0m 9.156 ms - 117[0m
+[0mGET /booking/api/seller/bookings/6ab6e19f9046c5e91bc7e79d [32m200[0m 8.693 ms - 1630[0m
+[0mPOST /booking/api/bookings/6ab6e19f9046c5e91bc7e79d/pay-balance [32m201[0m 30.349 ms - 172[0m
+[0mPOST /booking/api/payments/mock-complete [32m200[0m 19.827 ms - 23[0m
+[0mGET /booking/api/bookings/6ab6e19f9046c5e91bc7e79d [32m200[0m 8.228 ms - 2590[0m
+[0mPOST /booking/api/bookings/6ab6e19f9046c5e91bc7e79d/reschedule [32m200[0m 15.714 ms - 1387[0m
+[0mPOST /booking/api/bookings/6ab6e19f9046c5e91bc7e79d/reschedule [33m400[0m 4.910 ms - 89[0m
+[0mGET /booking/api/bookings/6ab6e19f9046c5e91bc7e79d/cancel-quote [32m200[0m 3.523 ms - 161[0m
+[0mPOST /booking/api/checkout [32m201[0m 18.076 ms - 218[0m
+[0mPOST /booking/api/payments/mock-complete [32m200[0m 22.424 ms - 23[0m
+[0mGET /booking/api/my-bookings [32m200[0m 4.327 ms - 2951[0m
+[0mPOST /booking/api/seller/bookings/6ab6e1a09046c5e91bc7e7aa/cancel [32m200[0m 24.229 ms - 164[0m
+[0mGET /booking/api/bookings/6ab6e1a09046c5e91bc7e7aa [32m200[0m 11.774 ms - 3413[0m
+[0mPOST /booking/api/bookings/6ab6e1a09046c5e91bc7e7aa/choose-replacement [32m200[0m 29.300 ms - 1410[0m
+[0mGET /booking/api/seller/penalties [32m200[0m 4.320 ms - 537[0m
+[0mPOST /booking/api/seller/penalties/6ab6e1a09046c5e91bc7e7b3/appeal [32m200[0m 11.235 ms - 674[0m
+[0mPOST /admin/api/penalties/6ab6e1a09046c5e91bc7e7b3/decide [32m200[0m 21.571 ms - 16[0m
+[0mGET /booking/api/seller/penalties [32m200[0m 4.413 ms - 657[0m
+[0mPOST /booking/api/checkout [32m201[0m 17.079 ms - 218[0m
+[0mPOST /booking/api/payments/mock-complete [32m200[0m 24.115 ms - 23[0m
+[0mGET /booking/api/my-bookings [32m200[0m 4.722 ms - 5940[0m
+[0mGET /booking/api/seller/bookings/6ab6e1a09046c5e91bc7e7bc [32m200[0m 6.245 ms - 1624[0m
+[0mPOST /booking/api/seller/bookings/6ab6e1a09046c5e91bc7e7bc/complete [33m400[0m 5.740 ms - 95[0m
+[0mPOST /booking/api/seller/bookings/6ab6e1a09046c5e91bc7e7bc/complete [32m200[0m 14.001 ms - 1459[0m
+[0mPOST /booking/api/bookings/6ab6e1a09046c5e91bc7e7bc/dispute [32m201[0m 17.502 ms - 643[0m
+[0mPOST /booking/api/seller/bookings/6ab6e1a09046c5e91bc7e7bc/dispute-response [32m200[0m 11.805 ms - 16[0m
+[0mGET /admin/api/disputes?status=open [32m200[0m 6.748 ms - 2045[0m
+[0mPOST /admin/api/disputes/6ab6e1a09046c5e91bc7e7c5/decide [32m200[0m 54.088 ms - 16[0m
+[0mGET /admin/api/payouts [32m200[0m 5.443 ms - 57[0m
+[0mGET /booking/api/seller/dashboard [32m200[0m 20.081 ms - 3373[0m
+[0mPOST /admin/api/payouts/run [32m200[0m 26.004 ms - 51[0m
+[0mGET /booking/api/seller/payouts [32m200[0m 6.576 ms - 2523[0m
+[0mPOST /booking/api/bookings/6ab6e1a09046c5e91bc7e7bc/review [32m201[0m 23.729 ms - 308[0m
+[0mGET /catalog/api/services/6ab6e19f93066d3647372320/reviews [32m200[0m 2.768 ms - 159[0m
+[0mPOST /booking/api/bookings/6ab6e19f9046c5e91bc7e79d/cancel [32m200[0m 46.563 ms - 32[0m
+[0mPOST /booking/api/bookings/6ab6e1a09046c5e91bc7e7b7/messages [33m400[0m 3.803 ms - 108[0m
+[0mGET /admin/api/dashboard [32m200[0m 11.550 ms - 6112[0m
+[0mGET /admin/api/providers [32m200[0m 5.236 ms - 2164[0m
+[0mGET /admin/api/providers/6ab6e19f95015ef4e9d15590 [32m200[0m 6.614 ms - 7181[0m
+[0mGET /admin/api/bookings [32m200[0m 4.789 ms - 6056[0m
+[0mGET /admin/api/bookings/6ab6e1a09046c5e91bc7e7bc [32m200[0m 7.113 ms - 4562[0m
+[0mGET /admin/api/payouts [32m200[0m 4.817 ms - 613[0m
+[0mGET /admin/api/penalties?status=all [32m200[0m 4.912 ms - 872[0m
+[0mGET /admin/api/users [32m200[0m 3.139 ms - 492[0m
+[0mGET /admin/api/settings [32m200[0m 3.166 ms - 304[0m
+[0mGET /admin/api/categories [32m200[0m 3.740 ms - 1954[0m
+[0mGET /admin/api/questions [32m200[0m 3.220 ms - 696[0m
+[0mGET /booking/api/seller/dashboard [32m200[0m 9.869 ms - 3469[0m
+[0mGET /booking/api/notifications [32m200[0m 4.111 ms - 3709[0m
+[0mGET /catalog/api/providers [32m200[0m 3.945 ms - 774[0m
+[0mGET /catalog/api/services/6ab6e19f93066d3647372320/also-booked [32m200[0m 7.152 ms - 15[0m
+=== screenshots
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+shot user-home
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+shot user-services
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 400 (Bad Request)
+shot user-service-detail
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+shot user-how-it-works
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[public] console: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+shot user-login
+shot seller-signup
+shot admin-login
+couple login 200
+shot user-bookings
+shot user-booking-replacement
+shot user-booking-released
+shot user-profile
+shot user-notifications
+provider login 200
+shot seller-dashboard
+shot seller-services
+shot seller-new-service
+shot seller-bookings
+shot seller-booking
+shot seller-availability
+shot seller-payouts
+shot seller-penalties
+shot seller-questions
+admin login 200
+shot admin-dashboard
+shot admin-providers
+shot admin-provider
+shot admin-bookings
+shot admin-booking
+shot admin-disputes
+shot admin-penalties
+shot admin-payouts
+shot admin-settings
