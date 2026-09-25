@@ -68,7 +68,8 @@ const expectOk = (label, r) => check(label, r.status >= 200 && r.status < 300, `
 
 const kigaliToday = () => new Date(Date.now() + 2 * 3600 * 1000).toISOString().slice(0, 10);
 const addDays = (d, n) => new Date(Date.parse(d + "T00:00:00Z") + n * 86400000).toISOString().slice(0, 10);
-const otpFor = async (email) => {
+const otpFor = async (rawEmail) => {
+  const email = rawEmail.toLowerCase();
   for (let i = 0; i < 20; i++) {
     const otp = await redis.get(`otp:${email}`);
     if (otp) return otp;
