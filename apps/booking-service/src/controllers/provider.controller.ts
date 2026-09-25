@@ -112,9 +112,9 @@ export const dashboard = async (req: any, res: Response) => {
     prisma.bookings.count({ where: { sellerId, status: "confirmed", eventDate: { gte: today } } }),
     prisma.bookings.findMany({ where: { sellerId, status: { in: ["completed", "disputed"] } }, select: { price: true } }),
     prisma.bookings.aggregate({ where: { sellerId, payoutId: { not: null } }, _sum: { providerAmount: true } }),
-    prisma.bookings.aggregate({ where: { sellerId, releasedAt: { not: null }, payoutId: null }, _sum: { providerAmount: true } }),
+    prisma.bookings.aggregate({ where: { sellerId, releasedAt: { not: null }, payoutId: { isSet: false } }, _sum: { providerAmount: true } }),
     prisma.penalties.findMany({ where: { sellerId, status: { in: ["pending", "appealed", "confirmed"] } } }),
-    prisma.questions.count({ where: { sellerId, answer: null, isHidden: false } }),
+    prisma.questions.count({ where: { sellerId, answer: { isSet: false }, isHidden: false } }),
     prisma.services.groupBy({ by: ["status"], where: { sellerId, isDeleted: false }, _count: true }),
     prisma.bookings.findMany({
       where: { sellerId, status: { notIn: ["pending_payment", "expired", "replaced"] } },
@@ -161,7 +161,7 @@ export const payouts = async (req: any, res: Response) => {
   const [list, pending, ledger] = await Promise.all([
     prisma.payouts.findMany({ where: { sellerId }, orderBy: { createdAt: "desc" }, take: 52 }),
     prisma.bookings.findMany({
-      where: { sellerId, releasedAt: { not: null }, payoutId: null, providerAmount: { gt: 0 } },
+      where: { sellerId, releasedAt: { not: null }, payoutId: { isSet: false }, providerAmount: { gt: 0 } },
       select: { id: true, serviceTitle: true, eventDate: true, providerAmount: true, releasedAt: true },
     }),
     prisma.ledgerEntries.findMany({ where: { sellerId }, orderBy: { createdAt: "desc" }, take: 100 }),

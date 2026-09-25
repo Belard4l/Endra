@@ -177,6 +177,9 @@ async function makeService(p, title) {
   expectOk("ask a public question", r);
   r = await photoA.c.post(`/catalog/api/seller/questions/${r.data?.question?.id}/answer`, { answer: "Yes, for a small travel fee." });
   expectOk("provider answers publicly", r);
+  expectOk("ask a second question", await couple.post(`/catalog/api/services/${svcA.id}/questions`, { question: "Can you shoot a Gusaba ceremony too?" }));
+  r = await photoA.c.get("/catalog/api/seller/questions?status=unanswered");
+  check("unanswered questions filter", r.data?.questions?.length === 1, r.data);
   r = await couple.get("/catalog/api/recommendations");
   check("recommendations respond", Array.isArray(r.data?.recommendations), r.data);
 
@@ -270,6 +273,10 @@ async function makeService(p, title) {
 
   // Payouts include earnings released before Thursday 00:00 — pretend this was released yesterday
   await prisma.bookings.update({ where: { id: b3.id }, data: { releasedAt: new Date(Date.now() - 36 * 3600 * 1000) } });
+  r = await admin.get("/admin/api/payouts");
+  check("admin sees next Thursday batch", r.data?.nextBatch?.amount === settled.providerAmount, r.data?.nextBatch);
+  r = await photoA.c.get("/booking/api/seller/dashboard");
+  check("provider dashboard shows next payout", r.data?.stats?.nextPayout === settled.providerAmount && r.data?.stats?.unansweredQuestions === 1, r.data?.stats);
   r = await admin.post("/admin/api/payouts/run");
   expectOk("admin runs payouts (PAYOUTS_ANY_DAY)", r);
   r = await photoA.c.get("/booking/api/seller/payouts");

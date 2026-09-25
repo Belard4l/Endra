@@ -104,7 +104,7 @@ export const runWeeklyPayouts = async (now: Date = new Date()) => {
   const cutoff = kigaliStartOfDay(batchDate); // released before Thursday 00:00 = up to Wednesday 23:59
 
   const due = await prisma.bookings.findMany({
-    where: { releasedAt: { lt: cutoff }, payoutId: null, providerAmount: { gt: 0 } },
+    where: { releasedAt: { lt: cutoff }, payoutId: { isSet: false }, providerAmount: { gt: 0 } },
     orderBy: { releasedAt: "asc" },
   });
   const bySeller = new Map<string, typeof due>();

@@ -377,7 +377,7 @@ export const listPayouts = async (req: any, res: Response) => {
   const payouts = await prisma.payouts.findMany({ where, orderBy: { createdAt: "desc" }, take: 200 });
   const sellers = await prisma.sellers.findMany({ where: { id: { in: payouts.map((p) => p.sellerId) } }, select: { id: true, name: true } });
   const byId = new Map(sellers.map((s) => [s.id, s.name]));
-  const pending = await prisma.bookings.aggregate({ where: { releasedAt: { not: null }, payoutId: null, providerAmount: { gt: 0 } }, _sum: { providerAmount: true }, _count: true });
+  const pending = await prisma.bookings.aggregate({ where: { releasedAt: { not: null }, payoutId: { isSet: false }, providerAmount: { gt: 0 } }, _sum: { providerAmount: true }, _count: true });
   res.json({
     payouts: payouts.map((p) => ({ ...p, sellerName: byId.get(p.sellerId) || "—" })),
     nextBatch: { amount: pending._sum.providerAmount || 0, bookings: pending._count },

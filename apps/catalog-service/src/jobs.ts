@@ -35,7 +35,7 @@ export const startCatalogJobs = () => {
     safely("question-reminders", async () => {
       const dayAgo = new Date(Date.now() - 24 * 3600 * 1000);
       const pending = await prisma.questions.findMany({
-        where: { answer: null, isHidden: false, createdAt: { lt: dayAgo }, remindedAt: null },
+        where: { answer: { isSet: false }, isHidden: false, createdAt: { lt: dayAgo }, remindedAt: { isSet: false } },
       });
       const bySeller = new Map<string, number>();
       pending.forEach((q) => bySeller.set(q.sellerId, (bySeller.get(q.sellerId) || 0) + 1));

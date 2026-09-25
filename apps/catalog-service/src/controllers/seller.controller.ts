@@ -274,7 +274,7 @@ export const updateAvailability = async (req: any, res: Response) => {
 export const myQuestions = async (req: any, res: Response) => {
   const filter = req.query.status;
   const where: any = { sellerId: req.seller.id, isHidden: false };
-  if (filter === "unanswered") where.answer = null;
+  if (filter === "unanswered") where.answer = { isSet: false };
   const questions = await prisma.questions.findMany({ where, orderBy: { createdAt: "desc" }, take: 100 });
   const services = await prisma.services.findMany({ where: { id: { in: questions.map((q) => q.serviceId) } }, select: { id: true, title: true, slug: true } });
   const byId = new Map(services.map((s) => [s.id, s]));

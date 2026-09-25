@@ -45,7 +45,7 @@ export const autoCompleteAndRelease = async () => {
   for (const b of overdue) await markCompleted(b.id, "system").catch((e) => console.error(e.message));
 
   // Dispute window passed with no dispute → release to the Thursday payout
-  const due = await prisma.bookings.findMany({ where: { status: "completed", releaseAt: { lt: new Date() }, releasedAt: null } });
+  const due = await prisma.bookings.findMany({ where: { status: "completed", releaseAt: { lt: new Date() }, releasedAt: { isSet: false } } });
   for (const b of due) await settleBooking(b.id, true);
 };
 
